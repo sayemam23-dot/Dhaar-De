@@ -1,3 +1,5 @@
+
+
 # ধার দে (Dhaar De)
 
 **Dhaar De** is a full-stack web app for tracking debts between friends — built with a Bengali-first, socially-aware twist. Instead of just logging who owes who, it makes settling up a little more fun (and a little more accountable).
@@ -56,7 +58,7 @@ Tracking informal debts among friends and family is common in everyday life but 
 
 ## 📸 Screenshots
 
-_Add screenshots of the dashboard, Shame Board, and per-debt chat here._
+<img width="1600" height="751" alt="1777050997423" src="https://github.com/user-attachments/assets/c84c9453-126f-4a18-9abd-229de687a685" />
 
 ## 🤝 Contributing
 

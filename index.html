@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ধার দে 🙏 — Live Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<style>
+/* css/style.css */
+/* global styles */
+
+
+
+:root {
+    --bg: #f5f0e8;
+    --surface: #fffdf7;
+    --surface2: #ede8dd;
+    --border: #ddd5c4;
+    --border2: #ccc3b0;
+    --accent: #e85d2f;
+    --accent-h: #c9451e;
+    --green: #2eb87a;
+    --green-h: #22a066;
+    --amber: #f5a623;
+    --text: #1a1510;
+    --text2: #3d3428;
+    --muted: #8a7d6a;
+    --card: #ffffff;
+    --red-soft: #fff0ec;
+    --grn-soft: #edfaf3;
+    --ylw-soft: #fffbec;
+    --shadow: 0 2px 8px rgba(0,0,0,.07);
+    --shadow-md: 0 4px 16px rgba(0,0,0,.1);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+    --radius: 10px;
+    --radius-sm: 6px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* navbar */
+.navbar {
+    background: var(--text);
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+
+.navbar-logo {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.navbar-logo span {
+    color: var(--accent);
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-link {
+    color: rgba(255,255,255,.6);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    transition: color .15s, background .15s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #fff;
+    background: rgba(255,255,255,.1);
+}
+
+.btn-nav-accent {
+    background: var(--accent);
+    color: #fff !important;
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .15s;
+}
+
+.btn-nav-accent:hover {
+    background: var(--accent-h);
+}
+
+/* notification dropdown */
+.notif-wrap {
+    position: relative;
+}
+
+.notif-badge {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.notif-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 290px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    display: none;
+    z-index: 300;
+    overflow: hidden;
+}
+
+.notif-dropdown.open {
+    display: block;
+}
+
+.notif-header {
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notif-item {
+    display: block;
+    padding: 10px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--surface2);
+    color: var(--text);
+    transition: background .12s;
+}
+
+.notif-item:hover {
+    background: var(--surface2);
+}
+
+.notif-item.unread {
+    background: var(--ylw-soft);
+    font-weight: 600;
+}
+
+.notif-time {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.notif-empty {
+    padding: 18px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+}
+
+/* page layout */
+.page-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 20px;
+}
+
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.page-header p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+/* cards */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.card-header h3 {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.card-header a {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Hind Siliguri', sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: background .15s, border-color .15s, color .15s;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-h); }
+.btn-success { background: var(--green); color: #fff; }
+.btn-success:hover { background: var(--green-h); }
+.btn-amber { background: var(--amber); color: #fff; }
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+}
+.btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--red-soft);
+}
+.btn-danger { background: #c0392b; color: #fff; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-block { width: 100%; justify-content: center; }
+
+/* status pills */
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pill-ok       { background: var(--grn-soft); color: var(--green); }
+.pill-soon     { background: var(--ylw-soft); color: #9a6e00; }
+.pill-overdue  { background: var(--red-soft); color: var(--accent); }
+.pill-warning  { background: var(--ylw-soft); color: #9a6e00; }
+.pill-danger   { background: var(--red-soft); color: #c0392b; }
+.pill-pending  { background: #f0f0ff; color: #5555cc; }
+.pill-settled  { background: var(--grn-soft); color: var(--green); }
+.pill-forgiven { background: #f0fff4; color: #1a7a4a; }
+.pill-contested { background: #fff0ec; color: #c0392b; }
+
+/* forms */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    margin-bottom: 6px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'Hind Siliguri', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--accent);
+    background: var(--surface);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+/* alerts */
+.alert {
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.alert-error {
+    background: var(--red-soft);
+    color: #c0392b;
+    border: 1px solid rgba(192,57,43,.2);
+}
+
+.alert-success {
+    background: var(--grn-soft);
+    color: var(--green);
+    border: 1px solid rgba(46,184,122,.2);
+}
+
+.alert-info {
+    background: var(--ylw-soft);
+    color: #9a6e00;
+    border: 1px solid rgba(245,166,35,.25);
+}
+
+/* avatar */
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.avatar-lg { width: 54px; height: 54px; font-size: 18px; border-radius: 12px; }
+.avatar-sm { width: 28px; height: 28px; font-size: 11px; border-radius: 6px; }
+
+/* toast */
+#toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    background: var(--text);
+    color: #fff;
+    padding: 11px 24px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    z-index: 9999;
+    transition: transform .3s ease;
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: var(--shadow-lg);
+}
+
+#toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 18px 0;
+}
+
+/* empty state */
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--muted);
+}
+
+.empty-state .empty-icon {
+    font-size: 44px;
+    margin-bottom: 10px;
+}
+
+.empty-state h3 {
+    font-size: 17px;
+    color: var(--text2);
+    margin-bottom: 6px;
+}
+
+.empty-state p {
+    font-size: 14px;
+}
+
+/* layout helpers */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-center  { display: flex; align-items: center; }
+.gap-8  { gap: 8px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.mt-16  { margin-top: 16px; }
+.mt-24  { margin-top: 24px; }
+
+/* progress bar */
+.progress-wrap { margin-top: 10px; }
+.progress-label { font-size: 12px; color: var(--muted); margin-bottom: 5px; display: flex; justify-content: space-between; }
+.progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width .5s ease; }
+
+/* table */
+.table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table th {
+    text-align: left;
+    padding: 9px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 2px solid var(--border);
+}
+.table td { padding: 12px; border-bottom: 1px solid var(--surface2); }
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: var(--surface2); }
+
+@media (max-width: 768px) {
+    .page-wrap { padding: 16px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .nav-link { display: none; }
+    .nav-link.active, .btn-nav-accent { display: flex; }
+    .navbar { padding: 0 14px; }
+}
+
+/* css/dashboard.css */
+/* dashboard and inner page styles */
+
+/* balance summary cards */
+.bal-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.bal-card {
+    border-radius: var(--radius);
+    padding: 20px 22px;
+}
+
+.bal-net {
+    background: var(--text);
+    color: #fff;
+}
+
+.bal-owe {
+    background: var(--red-soft);
+    border: 1px solid rgba(232,93,47,.2);
+}
+
+.bal-lent {
+    background: var(--grn-soft);
+    border: 1px solid rgba(46,184,122,.2);
+}
+
+.bal-label {
+    font-size: 11px;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.bal-owe .bal-label,
+.bal-lent .bal-label {
+    color: var(--muted);
+}
+
+.bal-amount {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+}
+
+.bal-amount.red   { color: var(--accent); }
+.bal-amount.green { color: var(--green); }
+
+.bal-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,.35);
+    margin-top: 8px;
+}
+
+/* quick action buttons */
+.quick-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+/* debt list rows */
+.debt-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    transition: background .12s;
+}
+
+.debt-row:last-child { border-bottom: none; }
+.debt-row:hover { background: var(--surface2); }
+
+.debt-info { flex: 1; min-width: 0; }
+.debt-name { font-weight: 600; font-size: 14px; }
+.debt-reason { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.debt-right { text-align: right; flex-shrink: 0; }
+.debt-amount { font-size: 16px; font-weight: 700; }
+.debt-amount.red   { color: var(--accent); }
+.debt-amount.green { color: var(--green); }
+.debt-date { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* tabs */
+.tab-bar {
+    display: flex;
+    gap: 2px;
+    border-bottom: 2px solid var(--border);
+    padding: 0 18px;
+    margin-bottom: 0;
+}
+
+.tab-btn {
+    padding: 11px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color .15s, border-color .15s;
+    font-family: 'Hind Siliguri', sans-serif;
+}
+
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* search */
+.search-bar {
+    position: relative;
+    margin: 14px 18px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 8px 12px 8px 34px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+}
+
+.search-bar input:focus { border-color: var(--accent); }
+
+.search-bar::before {
+    content: '🔍';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+}
+
+/* smartsettle suggestion */
+.smartsettle-card {
+    background: var(--text);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.smartsettle-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.smartsettle-card p {
+    font-size: 13px;
+    color: rgba(255,255,255,.55);
+}
+
+.smartsettle-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* badges grid */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.badge-item {
+    text-align: center;
+    padding: 10px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg);
+    transition: border-color .15s, background .15s;
+}
+
+.badge-item.earned {
+    border-color: var(--amber);
+    background: var(--ylw-soft);
+}
+
+.badge-icon { font-size: 22px; margin-bottom: 4px; }
+.badge-name { font-size: 10px; font-weight: 600; color: var(--muted); }
+.badge-item.earned .badge-name { color: var(--text); }
+
+/* chat */
+.chat-box {
+    max-height: 320px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 4px 0;
+}
+
+.chat-msg { max-width: 72%; }
+.chat-msg.mine    { align-self: flex-end; }
+.chat-msg.theirs  { align-self: flex-start; }
+.chat-name { font-size: 11px; color: var(--muted); margin-bottom: 3px; font-weight: 600; }
+
+.chat-bubble {
+    padding: 9px 13px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.mine   .chat-bubble { background: var(--accent); color: #fff; border-radius: 12px 12px 3px 12px; }
+.theirs .chat-bubble { background: var(--surface2); color: var(--text); border-radius: 12px 12px 12px 3px; }
+
+.chat-time { font-size: 10px; color: var(--muted); margin-top: 3px; }
+.mine .chat-time { text-align: right; }
+.chat-input-row { display: flex; gap: 10px; margin-top: 14px; }
+.chat-input-row .form-input { flex: 1; }
+
+/* add debt type toggle */
+.type-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 4px; }
+.type-option { display: none; }
+
+.type-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: border-color .15s, background .15s, color .15s;
+    text-align: center;
+}
+
+.type-label:hover { border-color: var(--border2); }
+
+.type-option:checked + .type-label {
+    border-color: var(--accent);
+    background: var(--red-soft);
+    color: var(--accent);
+}
+
+/* shame board */
+.shame-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.shame-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 16px;
+    width: 170px;
+    text-align: center;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.shame-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.shame-danger  { border-color: rgba(232,93,47,.4); background: var(--red-soft); }
+.shame-warning { border-color: rgba(245,166,35,.4); background: var(--ylw-soft); }
+.shame-mild    { border-color: var(--border2); }
+
+.shame-name { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+.shame-days { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* analytics bar chart */
+.chart-wrap {
+    position: relative;
+    height: 220px;
+    margin-top: 8px;
+}
+
+.bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    height: 100%;
+    padding-top: 16px;
+}
+
+.bar-group { display: flex; flex-direction: column; align-items: center; flex: 1; gap: 4px; }
+.bars { display: flex; gap: 4px; align-items: flex-end; height: 180px; }
+
+.bar {
+    width: 20px;
+    border-radius: 4px 4px 0 0;
+    min-height: 4px;
+    transition: height .5s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.bar:hover::after {
+    content: attr(data-val);
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text);
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.bar-owe  { background: var(--accent); }
+.bar-lent { background: var(--green); }
+.bar-label { font-size: 11px; color: var(--muted); font-weight: 600; }
+
+.chart-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* debt score ring */
+.score-ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.score-ring svg { transform: rotate(-90deg); }
+
+.score-ring .score-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* friends list */
+.friend-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    transition: background .12s;
+}
+
+.friend-row:hover { background: var(--surface2); }
+.friend-row:last-child { border-bottom: none; }
+.friend-info { flex: 1; }
+.friend-name { font-weight: 600; font-size: 14px; }
+.friend-meta { font-size: 12px; color: var(--muted); }
+.friend-actions { display: flex; gap: 8px; }
+
+@media (max-width: 768px) {
+    .bal-grid { grid-template-columns: 1fr; }
+    .quick-actions { flex-direction: column; }
+    .badges-grid { grid-template-columns: repeat(3, 1fr); }
+    .shame-card { width: 140px; }
+}
+
+/* css/landing.css */
+        .hero {
+            padding: 90px 24px;
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--red-soft);
+            color: var(--accent);
+            border: 1px solid rgba(232,93,47,.3);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 64px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero p {
+            font-size: 17px;
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+        .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        .stats-bar {
+            background: var(--text);
+            color: rgba(255,255,255,.55);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            font-size: 13px;
+        }
+        .stat-item { display: flex; align-items: center; gap: 8px; }
+        .stat-num { color: #fff; font-weight: 700; font-size: 18px; }
+
+        .features { padding: 70px 24px; max-width: 1100px; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            transition: transform .2s, box-shadow .2s, border-color .2s;
+        }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--accent); }
+        .feature-icon { font-size: 32px; margin-bottom: 12px; }
+        .feature-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+        .feature-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+        .smartsettle-section {
+            background: var(--text);
+            color: #fff;
+            padding: 70px 24px;
+        }
+        .smartsettle-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+        .ss-demo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin: 32px 0;
+            flex-wrap: wrap;
+        }
+        .ss-box {
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: var(--radius);
+            padding: 18px 22px;
+            font-size: 14px;
+            min-width: 150px;
+        }
+        .ss-box .amount { font-size: 22px; font-weight: 700; margin-top: 8px; }
+        .ss-arrow { font-size: 26px; color: var(--amber); }
+        .ss-result {
+            background: var(--green);
+            border-radius: var(--radius);
+            padding: 18px 28px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .shame-section { padding: 70px 24px; max-width: 900px; margin: 0 auto; text-align: center; }
+
+        .personality-section { background: var(--surface); padding: 70px 24px; }
+        .personality-inner { max-width: 1000px; margin: 0 auto; }
+        .personality-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 36px; }
+        .p-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            transition: border-color .15s, transform .15s;
+        }
+        .p-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .p-icon { font-size: 28px; margin-bottom: 8px; }
+        .p-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .p-desc { font-size: 12px; color: var(--muted); }
+
+        .cta { padding: 90px 24px; text-align: center; }
+        .cta h2 { font-size: clamp(24px, 4vw, 42px); font-weight: 700; margin-bottom: 14px; }
+
+        footer {
+            background: var(--text);
+            color: rgba(255,255,255,.4);
+            text-align: center;
+            padding: 24px;
+            font-size: 13px;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        .section-title {
+            font-size: clamp(22px, 4vw, 34px);
+            font-weight: 700;
+            text-align: center;
+        }
+        .section-sub { text-align: center; color: var(--muted); margin-top: 8px; font-size: 14px; }
+
+        @media (max-width: 768px) {
+            .features-grid, .personality-grid { grid-template-columns: 1fr; }
+            .ss-demo { flex-direction: column; }
+            .stats-bar { gap: 20px; }
+        }
+
+
+</style>
+</head>
+<body>
+<div id="app"><p style="font-family:sans-serif;text-align:center;padding:60px 20px;color:#8a7d6a">ধার দে 🙏 লোড হচ্ছে…</p></div>
+<div id="toast"></div>
+<noscript><p style="font-family:sans-serif;text-align:center;padding:40px">This demo needs JavaScript enabled.</p></noscript>
+<template id="tpl-landing">
+<section>
+    <div class="hero">
+        <div class="hero-badge">🇧🇩 বাংলাদেশে তৈরি</div>
+        <h1>বন্ধুর কাছে <span>টাকা চাওয়ার</span> অস্বস্তি শেষ</h1>
+        <p>ধার দে দিয়ে বন্ধু, পরিবার বা সহপাঠীর সাথে টাকা লেনদেনের হিসাব রাখো — স্বচ্ছভাবে, সহজে।</p>
+        <div class="hero-btns">
+            <a href="#/dashboard" class="btn btn-primary" style="font-size:16px;padding:13px 30px">
+                🙏 বিনামূল্যে শুরু করুন
+            </a>
+            <a href="#/shame" class="btn btn-outline" style="font-size:16px;padding:13px 26px">
+                😬 Shame Board দেখুন
+            </a>
+        </div>
+    </div>
+</section>
+
+<div class="stats-bar">
+    <div class="stat-item"><span class="stat-num">১০০%</span> বিনামূল্যে</div>
+    <div class="stat-item"><span class="stat-num">Dual</span> Confirmation</div>
+    <div class="stat-item"><span class="stat-num">SmartSettle™</span> অটো-নেটিং</div>
+    <div class="stat-item"><span class="stat-num">Shame</span> Board 😂</div>
+</div>
+
+<section class="features">
+    <h2 class="section-title">কেন ধার দে?</h2>
+    <p class="section-sub">সব features একটাই অ্যাপে</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🤝</div>
+            <div class="feature-title">Dual Confirmation</div>
+            <div class="feature-desc">দুজনকেই ধার নিশ্চিত করতে হবে। কেউ মিথ্যা ধার তৈরি করতে পারবে না।</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">SmartSettle™</div>
+            <div class="feature-desc">পাল্টা ধার থাকলে অটোমেটিক হিসাব করে একটা ধারে মিলিয়ে দেয়।</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">😬</div>
+            <div class="feature-title">Shame Board</div>
+            <div class="feature-desc">৩০+ দিন ধার দেয়নি? সবার সামনে নাম উঠে যাবে! 😂</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <div class="feature-title">Debt Chat</div>
+            <div class="feature-desc">প্রতিটি ধারের জন্য আলাদা চ্যাট — screenshot, নোট, সব।</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <div class="feature-title">Analytics</div>
+            <div class="feature-desc">মাসিক চার্ট, কার সাথে বেশি ধার, গড় পরিশোধের সময় — সব দেখো।</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <div class="feature-title">Share Link</div>
+            <div class="feature-desc">অ্যাকাউন্ট ছাড়াও লিঙ্ক দিয়ে ধার confirm করানো যায়। ৭ দিন বৈধ।</div>
+        </div>
+    </div>
+</section>
+
+<section class="smartsettle-section">
+    <div class="smartsettle-inner">
+        <h2 class="section-title" style="color:#fff">⚡ SmartSettle™ কিভাবে কাজ করে?</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,.45)">দুটো ধার মিলিয়ে একটা করে দেয়</p>
+
+        <div class="ss-demo">
+            <div class="ss-box">
+                <div style="color:rgba(255,255,255,.55);font-size:12px">Rakib → Sadia</div>
+                <div class="amount" style="color:var(--accent)">৳৫০০</div>
+            </div>
+            <div class="ss-arrow">+</div>
+            <div class="ss-box">
+                <div style="color:rgba(255,255,255,.55);font-size:12px">Sadia → Rakib</div>
+                <div class="amount" style="color:var(--green)">৳২৩০</div>
+            </div>
+            <div class="ss-arrow">=</div>
+            <div class="ss-result">
+                <div style="font-size:13px;margin-bottom:6px">শুধু এটুকু লাগবে</div>
+                <div style="font-size:26px;font-weight:700">Rakib → ৳২৭০</div>
+            </div>
+        </div>
+        <p style="color:rgba(255,255,255,.35);font-size:13px">দুটো আলাদা ধার মিলিয়ে একটা নেট পেমেন্টে সমাধান!</p>
+    </div>
+</section>
+
+<section class="personality-section">
+    <div class="personality-inner">
+        <h2 class="section-title">🎭 তুমি কোন ধরনের?</h2>
+        <p class="section-sub">ধার দে তোমার behavior দেখে Personality দেয়</p>
+        <div class="personality-grid">
+            <div class="p-card">
+                <div class="p-icon">👻</div>
+                <div class="p-title">The Phantom</div>
+                <div class="p-desc">ধার নেয়, তারপর উধাও!</div>
+            </div>
+            <div class="p-card">
+                <div class="p-icon">⚡</div>
+                <div class="p-title">The Flash</div>
+                <div class="p-desc">৪৮ ঘণ্টার মধ্যে পরিশোধ করে</div>
+            </div>
+            <div class="p-card">
+                <div class="p-icon">🏆</div>
+                <div class="p-title">The Saint</div>
+                <div class="p-desc">ধার মাফ করে দেয় সহজেই</div>
+            </div>
+            <div class="p-card">
+                <div class="p-icon">🎭</div>
+                <div class="p-title">The Negotiator</div>
+                <div class="p-desc">সবসময় কিস্তিতে দেয়</div>
+            </div>
+            <div class="p-card">
+                <div class="p-icon">😅</div>
+                <div class="p-title">The Forgetful</div>
+                <div class="p-desc">৩ বার মনে করিয়ে দিলে দেয়</div>
+            </div>
+            <div class="p-card">
+                <div class="p-icon">🤝</div>
+                <div class="p-title">The Honest</div>
+                <div class="p-desc">সাথে সাথেই confirm করে</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>আজই শুরু করো 🙏</h2>
+    <p style="color:var(--muted);margin-bottom:28px;font-size:16px">
+        বিনামূল্যে, কোনো ক্রেডিট কার্ড লাগবে না।
+    </p>
+    <a href="#/dashboard" class="btn btn-primary" style="font-size:16px;padding:13px 32px">
+        🙏 ধার দে শুরু করুন — বিনামূল্যে
+    </a>
+</section>
+
+<footer>
+    <p>ধার দে 🙏 · বন্ধুর সাথে হিসাব রাখো সহজে · Made with ❤️ in Bangladesh</p>
+    <p style="margin-top:6px">
+        <a href="#/dashboard">Login</a> ·
+        <a href="#/dashboard">Register</a> ·
+        <a href="#/shame">Shame Board</a>
+    </p>
+</footer>
+</template>
+<script>
+// if anything goes wrong, show the error on the page instead of a blank screen
+window.addEventListener('error', function (e) {
+  var a = document.getElementById('app');
+  if (a && a.textContent.indexOf('লোড হচ্ছে') > -1)
+    a.innerHTML = '<pre style="font:14px monospace;padding:30px;white-space:pre-wrap;color:#c0392b">Demo failed to start:\n' + e.message + '</pre>';
+});
+</script>
+<script>
+// toast notification
+function showToast(msg, duration) {
+    duration = duration || 3000;
+    var t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(function() {
+        t.classList.remove('show');
+    }, duration);
+}
+
+// confetti effect for settle/forgive actions
+function triggerConfetti() {
+    var colors = ['#e85d2f', '#2eb87a', '#f5a623', '#74b9ff', '#a29bfe', '#fd79a8'];
+    for (var i = 0; i < 70; i++) {
+        var p = document.createElement('div');
+        var size = Math.random() * 8 + 4;
+        p.style.cssText = 'position:fixed;top:-10px;left:' + (Math.random() * 100) + 'vw;width:' + size + 'px;height:' + size + 'px;background:' + colors[Math.floor(Math.random() * colors.length)] + ';border-radius:' + (Math.random() > .5 ? '50%' : '2px') + ';animation:confettiFall ' + (Math.random() * 2 + 1.5) + 's linear forwards;animation-delay:' + (Math.random() * .5) + 's;pointer-events:none;z-index:9998;';
+        document.body.appendChild(p);
+        setTimeout(function() { p.remove(); }, 4000);
+    }
+}
+
+// add confetti animation keyframes
+(function() {
+    var s = document.createElement('style');
+    s.textContent = '@keyframes confettiFall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }';
+    document.head.appendChild(s);
+})();
+
+// show toast based on URL params
+document.addEventListener('DOMContentLoaded', function() {
+    var p = new URLSearchParams(window.location.search);
+    if (p.get('added'))    showToast('✅ ধার সফলভাবে যোগ হয়েছে! 🙏');
+    if (p.get('settled'))  { showToast('🎉 ধার পরিশোধ হয়েছে!'); triggerConfetti(); }
+    if (p.get('forgiven')) { showToast('💚 ধার মাফ করা হয়েছে!'); triggerConfetti(); }
+    if (p.get('saved'))    showToast('✅ পরিবর্তন সংরক্ষিত হয়েছে।');
+    if (p.get('sent'))     showToast('📤 বার্তা পাঠানো হয়েছে।');
+});
+
+// filter debt rows by search query
+function filterDebts(query) {
+    var rows = document.querySelectorAll('.debt-row[data-search]');
+    rows.forEach(function(row) {
+        var txt = row.dataset.search.toLowerCase();
+        row.style.display = txt.includes(query.toLowerCase()) ? '' : 'none';
+    });
+}
+
+// switch between tabs
+function switchTab(tabName) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) {
+        b.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-panel').forEach(function(p) {
+        p.style.display = 'none';
+    });
+    document.querySelector('.tab-btn[data-tab="' + tabName + '"]').classList.add('active');
+    var panel = document.getElementById('tab-' + tabName);
+    if (panel) panel.style.display = 'block';
+}
+
+// confirm before submitting a form
+function confirmAction(msg, form) {
+    if (confirm(msg)) form.submit();
+}
+
+// format amount as taka
+function formatTaka(n) {
+    return '৳' + parseFloat(n).toLocaleString('en-BD', { minimumFractionDigits: 2 });
+}
+
+// animate progress bars on load
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.progress-fill[data-pct]').forEach(function(bar) {
+        setTimeout(function() {
+            bar.style.width = bar.dataset.pct + '%';
+        }, 200);
+    });
+});
+
+// toggle payment form visibility
+function togglePayForm() {
+    var f = document.getElementById('payForm');
+    if (f) f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+// animate chart bars
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.bar[data-h]').forEach(function(bar) {
+        bar.style.height = '0px';
+        setTimeout(function() {
+            bar.style.height = bar.dataset.h + 'px';
+        }, 300);
+    });
+});
+
+// ধার দে — static demo. Same logic as the PHP version, but data lives in localStorage.
+const $ = s => document.querySelector(s), KEY = 'dhaarde.v1', DAY = 864e5,
+  COL = ['#e85d2f', '#2eb87a', '#f5a623', '#6c5ce7', '#0984e3', '#e84393', '#00b894', '#d63031'],
+  BADGES = [['first_settle', '🥇', 'First Settle'], ['flash', '⚡', 'The Flash'], ['on_fire', '🔥', 'On Fire'], ['clean_slate', '💚', 'Clean Slate'], ['forgiver', '🕊️', 'Forgiver'], ['early_bird', '⏰', 'Early Bird'], ['trusted', '👑', 'Trusted'], ['honest', '🤝', 'Honest']],
+  iso = n => new Date(Date.now() + n * DAY).toISOString().slice(0, 10),
+  esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const d0 = (id, l, b, amt, reason, o = {}) => ({ id, l, b, amt, paid: 0, reason, due: null, status: 'active', lc: 1, bc: 1, msgs: [], pays: [], created: iso(-20), ...o });
+const seed = () => ({
+  me: 1, nid: 6,
+  users: [{ id: 1, name: 'Rakib Khan', score: 75, badges: [] }, { id: 2, name: 'Sadia Islam', score: 60, badges: [] }, { id: 3, name: 'Nayeem Hasan', score: 40, badges: [] }],
+  debts: [
+    d0(1, 1, 2, 500, 'দুপুরের খাবার', { due: iso(5) }),
+    d0(2, 2, 3, 1200, 'রিকশা ভাড়া + চা', { due: iso(-70) }),
+    d0(3, 1, 3, 300, 'বই কেনা', { paid: 150, status: 'partial', due: iso(-35) }),
+    d0(4, 2, 1, 230, 'রিকশা ভাড়া', { due: iso(10) }),
+    d0(5, 3, 1, 200, 'চা-নাস্তা', { status: 'pending', bc: 0, created: iso(-1) })
+  ]
+});
+let S; try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) { }
+S = S || seed();
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { } };
+
+const U = id => S.users.find(u => u.id == id), D = id => S.debts.find(d => d.id == id),
+  rem = d => d.amt - d.paid, live = d => ['active', 'partial'].includes(d.status),
+  taka = n => '৳' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+  av = (n, c = '', s = '') => `<div class="avatar ${c}" style="background:${COL[n.charCodeAt(0) % 8]};${s}">${n.slice(0, 2).toUpperCase()}</div>`;
+
+function pill(d) {
+  const x = d.due ? (new Date(d.due) - Date.now()) / DAY : 99;
+  let c = 'ok', t = '✅ সক্রিয়';
+  if (d.status == 'pending') [c, t] = ['pending', '⏳ অপেক্ষায়'];
+  else if (d.status == 'settled') [c, t] = ['settled', '🎉 সম্পূর্ণ'];
+  else if (d.status == 'forgiven') [c, t] = ['forgiven', '💚 মাফ'];
+  else if (d.status == 'contested') [c, t] = ['contested', '⚠️ বিতর্কিত'];
+  else if (x < -60) [c, t] = ['danger', '🔴 ৬০+ দিন বাকি'];
+  else if (x < -30) [c, t] = ['warning', '🟡 ৩০+ দিন বাকি'];
+  else if (x < 0) [c, t] = ['overdue', '⚠️ মেয়াদোত্তীর্ণ'];
+  else if (x <= 5) [c, t] = ['soon', '🟡 শীঘ্রই শেষ'];
+  return `<span class="pill pill-${c}">${t}</span>`;
+}
+
+// SmartSettle: counter-debts between two people get netted into one
+function smart(a, b) {
+  const sum = (l, r) => S.debts.filter(d => d.l == l && d.b == r && live(d)).reduce((s, d) => s + rem(d), 0);
+  const ab = sum(a, b), ba = sum(b, a);
+  return ab && ba ? { o: U(b), ab, ba, net: Math.abs(ab - ba), dir: ab > ba ? 'সে তোমাকে দেবে' : 'তুমি তাকে দেবে' } : null;
+}
+
+function shame() {
+  return S.users.map(u => {
+    const ds = S.debts.filter(d => d.b == u.id && live(d) && d.due && new Date(d.due) < Date.now());
+    return ds.length && { u, n: ds.length, days: Math.max(...ds.map(d => Math.floor((Date.now() - new Date(d.due)) / DAY))), tot: ds.reduce((s, d) => s + rem(d), 0) };
+  }).filter(Boolean).sort((a, b) => b.days - a.days);
+}
+
+const row = d => {
+  const m = d.l == S.me, o = U(m ? d.b : d.l);
+  return `<a class="debt-row" href="#/debt/${d.id}" data-search="${esc(o.name + ' ' + (d.reason || ''))}">${av(o.name)}<div class="debt-info"><div class="debt-name">${o.name}</div><div class="debt-reason">${esc(d.reason || '—')}</div></div><div class="debt-right"><div class="debt-amount ${m ? 'green' : 'red'}">${m ? '+' : '−'}${taka(rem(d))}</div>${pill(d)}</div></a>`;
+};
+const mineDebts = () => S.debts.filter(d => d.l == S.me || d.b == S.me);
+const empty = '<div class="empty-state"><div class="empty-icon">📭</div><h3>কোনো ধার নেই</h3></div>';
+
+function nav(p) {
+  const l = (h, t) => `<a class="nav-link ${p == h ? 'active' : ''}" href="#/${h}">${t}</a>`;
+  return `<nav class="navbar"><a href="#/" class="navbar-logo">ধার দে <span>🙏</span></a><div class="navbar-links">${l('dashboard', '📊 Dashboard')}${l('debts', '📋 সব ধার')}${l('shame', '😬 Shame Board')}<select class="form-select" style="width:auto;padding:4px 8px;font-size:12px" onchange="A.sw(+this.value)" title="Demo: switch user">${S.users.map(u => `<option value="${u.id}" ${u.id == S.me ? 'selected' : ''}>👤 ${u.name}</option>`).join('')}</select><a class="btn-nav-accent" href="#/add">+ নতুন ধার</a></div></nav>`;
+}
+
+const landing = () => $('#tpl-landing').innerHTML;
+
+function dashboard() {
+  const me = U(S.me), sum = k => S.debts.filter(d => d[k] == S.me && live(d)).reduce((s, d) => s + rem(d), 0),
+    owe = sum('b'), lent = sum('l'), net = lent - owe,
+    ss = S.users.filter(u => u.id != S.me).map(u => smart(S.me, u.id)).filter(Boolean).map(x =>
+      `<div class="smartsettle-card"><div><h4>⚡ SmartSettle™ — ${x.o.name}</h4><p>তুমি পাবে ${taka(x.ab)}, দেবে ${taka(x.ba)} → নেট ${taka(x.net)} (${x.dir})</p></div><div class="smartsettle-actions"><button class="btn btn-success btn-sm" onclick="A.smart(${x.o.id})">Net করুন</button></div></div>`).join('');
+  return `<div class="page-wrap"><div class="page-header"><h1>স্বাগতম, ${me.name} 👋</h1><p>Debt Score: <b>${me.score}/100</b> · উপরের ড্রপডাউন থেকে অন্য ইউজারে সুইচ করে দুই পক্ষের confirmation টেস্ট করো</p></div>
+<div class="bal-grid"><div class="bal-card bal-net"><div class="bal-label">নেট ব্যালেন্স</div><div class="bal-amount ${net < 0 ? 'red' : 'green'}">${net < 0 ? '−' : '+'}${taka(Math.abs(net))}</div></div><div class="bal-card bal-owe"><div class="bal-label">তুমি দেবে</div><div class="bal-amount red">${taka(owe)}</div></div><div class="bal-card bal-lent"><div class="bal-label">তুমি পাবে</div><div class="bal-amount green">${taka(lent)}</div></div></div>${ss}
+<div class="card" style="padding:0;margin-bottom:20px"><div class="card-header" style="padding:14px 18px;margin:0"><h3>সাম্প্রতিক ধার</h3><a href="#/debts">সব দেখুন →</a></div>${mineDebts().slice(-6).reverse().map(row).join('') || empty}</div>
+<div class="card"><div class="card-header"><h3>🏅 Badges</h3></div><div class="badges-grid">${BADGES.map(b => `<div class="badge-item ${me.badges.includes(b[0]) ? 'earned' : ''}"><div class="badge-icon">${b[1]}</div><div class="badge-name">${b[2]}</div></div>`).join('')}</div></div>
+<p style="text-align:center;margin-top:24px;font-size:12px"><a href="#" onclick="A.reset();return false" style="color:var(--muted)">↺ Demo data রিসেট করুন</a></p></div>`;
+}
+
+const debts = () => `<div class="page-wrap"><div class="page-header"><h1>সব ধার</h1></div><div class="card" style="padding:0"><div class="search-bar"><input placeholder="নাম বা কারণ খুঁজুন..." oninput="filterDebts(this.value)"></div>${mineDebts().reverse().map(row).join('') || empty}</div></div>`;
+
+const add = () => `<div class="page-wrap" style="max-width:520px"><div class="card"><h2 style="margin-bottom:16px">নতুন ধার যোগ করুন</h2>
+<div class="form-group"><label class="form-label">ধরন</label><select id="t" class="form-select"><option value="lent">আমি ধার দিয়েছি</option><option value="borrowed">আমি ধার নিয়েছি</option></select></div>
+<div class="form-group"><label class="form-label">কার সাথে</label><select id="w" class="form-select">${S.users.filter(u => u.id != S.me).map(u => `<option value="${u.id}">${u.name}</option>`).join('')}</select></div>
+<div class="form-group"><label class="form-label">পরিমাণ (৳)</label><input id="a" type="number" min="1" class="form-input"></div>
+<div class="form-group"><label class="form-label">কারণ</label><input id="r" class="form-input"></div>
+<div class="form-group"><label class="form-label">শেষ তারিখ</label><input id="du" type="date" class="form-input"></div>
+<button class="btn btn-primary btn-block" onclick="A.add()">ধার যোগ করুন 🙏</button></div></div>`;
+
+function detail(id) {
+  const d = D(id);
+  if (!d || (d.l != S.me && d.b != S.me)) return '<div class="page-wrap"><div class="empty-state"><h3>এই ধারটি আপনার নয়</h3><a class="btn btn-outline" href="#/debts">← ফিরে যান</a></div></div>';
+  const L = d.l == S.me, o = U(L ? d.b : d.l), r = rem(d), pct = Math.round(d.paid / d.amt * 100), mc = L ? d.lc : d.bc,
+    act = ['pending', 'active', 'partial', 'contested'].includes(d.status),
+    b = (c, t, f) => `<button class="btn btn-${c}" onclick="${f}">${t}</button>`;
+  return `<div class="page-wrap" style="max-width:720px"><a href="#/debts" style="font-size:13px;color:var(--muted)">← সব ধারে ফিরুন</a>
+<div class="card" style="margin:16px 0 20px"><div class="flex-between"><div class="flex-center gap-12">${av(o.name, 'avatar-lg')}<div><h2>${o.name}</h2><p style="color:var(--muted);font-size:13px">${esc(d.reason || 'কারণ উল্লেখ নেই')}${d.due ? ' · শেষ তারিখ: ' + d.due : ''}</p></div></div><div style="text-align:right"><div style="font-size:32px;font-weight:700;color:var(--${L ? 'green' : 'accent'})">${L ? '+' : '−'}${taka(r)}</div>${pill(d)}</div></div>
+<div class="flex gap-16 mt-16" style="font-size:13px;color:var(--muted)"><span>${d.lc ? '✅' : '⏳'} ${U(d.l).name} (Lender)</span><span>${d.bc ? '✅' : '⏳'} ${U(d.b).name} (Borrower)</span></div>
+${d.paid ? `<div class="progress-wrap"><div class="progress-label"><span>পরিশোধ: ${taka(d.paid)} / ${taka(d.amt)}</span><span>${pct}%</span></div><div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div></div>` : ''}
+${act ? `<hr class="divider"><div class="flex gap-8" style="flex-wrap:wrap">${mc ? '' : b('success', '✓ নিশ্চিত করুন', `A.conf(${id})`)}${!L && d.status != 'pending' ? b('primary', '💸 পেমেন্ট করুন', 'togglePayForm()') : ''}${L ? b('outline', '💚 মাফ করুন', `A.forgive(${id})`) : ''}${b('outline', '🎉 Settle করুন', `A.settle(${id})`)}${live(d) ? b('outline', '⚠️ আপত্তি', `A.contest(${id})`) : ''}</div>
+<div id="payForm" style="display:none;margin-top:16px"><input id="pa" type="number" min="1" max="${r}" class="form-input" placeholder="কত টাকা? (বাকি ${taka(r)})"><input id="pn" class="form-input" style="margin-top:8px" placeholder="নোট — বিকাশ / নগদ"><button class="btn btn-success mt-16" onclick="A.pay(${id})">✓ পেমেন্ট রেকর্ড করুন</button></div>` : ''}</div>
+${d.pays.length ? `<div class="card" style="margin-bottom:20px"><div class="card-header"><h3>💸 পেমেন্ট ইতিহাস</h3></div>${d.pays.map(p => `<div class="flex-between" style="padding:6px 0"><span>${U(p.f).name}${p.n ? ' · ' + esc(p.n) : ''}</span><b>${taka(p.a)}</b></div>`).join('')}</div>` : ''}
+<div class="card"><div class="card-header"><h3>💬 চ্যাট</h3></div><div class="chat-box">${d.msgs.map(m => `<div class="chat-msg ${m.f == S.me ? 'mine' : 'theirs'}"><div class="chat-name">${U(m.f).name}</div><div class="chat-bubble">${esc(m.t)}</div></div>`).join('') || '<div class="empty-state" style="padding:20px">এখনো কোনো বার্তা নেই</div>'}</div><div class="chat-input-row"><input id="m" class="form-input" placeholder="বার্তা লিখুন..."><button class="btn btn-primary" onclick="A.msg(${id})">পাঠান</button></div></div></div>`;
+}
+
+function shamePg() {
+  const L = shame();
+  return `<div class="page-wrap"><div class="page-header" style="text-align:center"><h1 style="font-size:36px">😬 Shame Board</h1><p>যারা মেয়াদোত্তীর্ণ ধার পরিশোধ করেনি তাদের তালিকা।</p></div>${L.length ? `<div class="shame-grid">${L.map(x => {
+    const c = x.days > 60 ? 'danger' : x.days > 30 ? 'warning' : 'mild', i = x.days > 60 ? '🔴' : x.days > 30 ? '🟡' : '🟠';
+    return `<div class="shame-card shame-${c}">${av(x.u.name, 'avatar-lg', 'margin:0 auto 12px')}<div class="shame-name">${x.u.name}</div><div style="margin:10px 0"><span class="pill pill-${c}">${i} ${x.days} দিন</span></div><div class="shame-days">${x.n}টি মেয়াদোত্তীর্ণ ধার</div><div class="shame-days">মোট: ${taka(x.tot)}</div><div style="font-size:20px;font-weight:700;margin-top:10px">${x.u.score}/100</div></div>`;
+  }).join('')}</div>` : '<div class="empty-state"><div class="empty-icon">🎉</div><h3>কেউ Shame Board-এ নেই!</h3></div>'}</div>`;
+}
+
+function render() {
+  const [p, id] = location.hash.replace('#/', '').split('/');
+  const pg = { dashboard, debts, add, shame: shamePg, debt: () => detail(+id) }[p] || landing;
+  $('#app').innerHTML = nav(p) + pg();
+  scrollTo(0, 0);
+}
+
+const go = (m, c) => { save(); render(); if (m) showToast(m); if (c) triggerConfetti(); };
+const bump = (uid, n) => { const u = U(uid); u.score = Math.max(0, Math.min(100, u.score + n)); };
+const badge = (uid, t) => { const u = U(uid); if (!u.badges.includes(t)) { u.badges.push(t); showToast('🏅 নতুন Badge অর্জিত: ' + t); } };
+
+const A = {
+  sw(id) { S.me = id; go(); },
+  conf(id) { const d = D(id); d[d.l == S.me ? 'lc' : 'bc'] = 1; if (d.lc && d.bc) d.status = 'active'; go('✅ নিশ্চিত করা হয়েছে'); },
+  forgive(id) { if (!confirm('ধার মাফ করবেন?')) return; D(id).status = 'forgiven'; badge(S.me, 'forgiver'); go('💚 ধার মাফ করা হয়েছে!', 1); },
+  settle(id) { if (!confirm('ধার সম্পূর্ণ পরিশোধ হয়েছে?')) return; const d = D(id); d.status = 'settled'; d.paid = d.amt; badge(S.me, 'first_settle'); bump(d.b, 10); go('🎉 ধার পরিশোধ হয়েছে!', 1); },
+  contest(id) { if (confirm('সত্যিই আপত্তি করবেন?')) { D(id).status = 'contested'; go('⚠️ আপত্তি জানানো হয়েছে'); } },
+  pay(id) {
+    const d = D(id), a = +$('#pa').value; if (!(a > 0)) return;
+    d.pays.push({ f: S.me, a, n: $('#pn').value }); d.paid = Math.min(d.amt, d.paid + a);
+    const done = d.paid >= d.amt; d.status = done ? 'settled' : 'partial'; bump(d.b, done ? 8 : 3);
+    if (done) badge(S.me, 'first_settle'); go('💸 পেমেন্ট রেকর্ড হয়েছে', done);
+  },
+  msg(id) { const t = $('#m').value.trim(); if (!t) return; D(id).msgs.push({ f: S.me, t }); go(); },
+  add() {
+    const a = +$('#a').value, w = +$('#w').value; if (!(a > 0)) return showToast('পরিমাণ দিন');
+    const L = $('#t').value == 'lent', id = S.nid++;
+    S.debts.push(d0(id, L ? S.me : w, L ? w : S.me, a, $('#r').value, { due: $('#du').value || null, status: 'pending', lc: 0, bc: 0, created: iso(0) }));
+    save(); location.hash = '#/debt/' + id; showToast('✅ ধার সফলভাবে যোগ হয়েছে! 🙏');
+  },
+  smart(o) {
+    const x = smart(S.me, o), m = Math.min(x.ab, x.ba);
+    const eat = (a, b) => { let k = m; S.debts.filter(d => d.l == a && d.b == b && live(d)).forEach(d => { const t = Math.min(rem(d), k); d.paid += t; k -= t; d.status = rem(d) <= 0 ? 'settled' : 'partial'; }); };
+    eat(S.me, o); eat(o, S.me); go('⚡ SmartSettle সম্পন্ন!', 1);
+  },
+  reset() { S = seed(); go('Demo data রিসেট হয়েছে'); }
+};
+
+addEventListener('hashchange', render);
+render();
+
+</script>
+</body>
+</html>

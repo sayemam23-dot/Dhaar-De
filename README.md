@@ -49,4 +49,5 @@ Test login: `rakib@test.com` / `password`
 
 ## Screenshots
 
-Add screenshots to a `screenshots/` folder and link them here.
+<img width="1600" height="751" alt="1777050997423" src="https://github.com/user-attachments/assets/9059c53a-b3bb-44b2-a28c-36737dc923e9" />
+

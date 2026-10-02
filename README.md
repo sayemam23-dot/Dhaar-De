@@ -2,7 +2,11 @@
 
 A Bengali debt-tracking web app for friends, family and classmates in Bangladesh. Track who owes whom, confirm debts from both sides, and settle up without the awkward conversation.
 
-**🔗 Live demo:** `https://sayemam23-dot.github.io/Dhaar-De/#/`
+<p align="center">
+  <a href="https://sayemam23-dot.github.io/Dhaar-De/#/">
+    <img src="https://img.shields.io/badge/🚀_Live_Demo-Explore_Dhaar--De-blue?style=for-the-badge" alt="Live Demo">
+  </a>
+</p>
 
 > Built as a team project at Daffodil International University.
 
